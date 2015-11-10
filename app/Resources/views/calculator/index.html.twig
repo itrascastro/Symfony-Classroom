@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }}Home{% endblock %}
+
+{% block body %}
+    <ul>
+        <li><a href="{{ path('app_calculator_index') }}">Index</a></li>
+        <li><a href="{{ path('app_calculator_sum') }}">Sum</a></li>
+    </ul>
+{% endblock %}

@@ -1,3 +1,4 @@
 app:
-    resource: "@AppBundle/Controller/"
+    resource: "@AppBundle/Controller/CalculatorController.php"
     type:     annotation
+    prefix:   /calculator
