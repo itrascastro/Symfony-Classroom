@@ -39,7 +39,11 @@ class CalculatorController extends Controller
      */
     public function sumAction()
     {
-        return $this->render(':calculator:form.html.twig', ['action' => 'app_calculator_doSum']);
+        return $this->render(':calculator:form.html.twig',
+            [
+                'action' => 'app_calculator_doSum'
+            ]
+        );
     }
 
     /**
@@ -65,6 +69,13 @@ class CalculatorController extends Controller
         $calculator->sum();
         $result = $calculator->getResult();
 
-        return $this->render(':calculator:result.html.twig', ['result' => $result]);
+        return $this->render(':calculator:result.html.twig',
+            [
+                'result'    => $result,
+                'op1'       => $op1,
+                'op2'       => $op2,
+                'operation' => '+',
+            ]
+        );
     }
 }

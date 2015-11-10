@@ -3,7 +3,8 @@
 {% block title %}{{ parent() }}Result{% endblock %}
 
 {% block body %}
+    <!-- <p>{{ op1~op2 }}</p> -->
     <div>
-        <p>The result: {{ result }}</p>
+        <p style="font-size: 80px;"><span style="color:green">{{ op1 }}</span> {{ operation }} <span style="color:blue;">{{ op2 }}</span> = <span style="color:red">{{ result }}</span></p>
     </div>
 {% endblock %}
