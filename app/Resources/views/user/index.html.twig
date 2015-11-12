@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <table>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.createdAt|date("d/m/Y H:i:s") }}</td>
+                <td>{{ user.updatedAt|date("d/m/Y H:i:s") }}</td>
+                <td><a href="{{ path('app_user_update', {'id': user.id}) }}">update</a> </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

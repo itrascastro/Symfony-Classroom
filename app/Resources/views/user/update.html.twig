@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div>
+        {{ form_widget(form) }}
+    </div>
+    <div>
+        <form method="post" action="{{ path('app_user_doUpdate') }}">
+            <input type="hidden" name="id" value="{{ user.id }}">
+            <input type="number" value="{{ user.id }}" name="showId" disabled="disabled"><br>
+            <input type="email" value="{{ user.email }}" name="email"><br>
+            <input type="text" value="{{ user.password }}" name="password"><br>
+            <input type="text" value="{{ user.username }}" name="username"><br>
+            <input type="datetime" value="{{ user.createdAt|date("d/m/Y H:i:s") }}" name="createdAt" disabled="disabled"><br>
+            <input type="datetime" value="{{ user.updatedAt|date("d/m/Y H:i:s") }}" name="updatedAt" disabled="disabled"><br>
+            <input type="submit" value="Update">
+        </form>
+    </div>
+{% endblock %}

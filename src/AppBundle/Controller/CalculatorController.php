@@ -53,7 +53,7 @@ class CalculatorController extends Controller
      *
      * @Route(
      *     path = "/do-sum",
-     *     name = "app_calculator_doSum"
+     *     name = "app_calculator_doSum",
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response

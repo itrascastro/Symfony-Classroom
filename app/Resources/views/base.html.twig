@@ -2,11 +2,16 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Calculator - {% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <ul>
+        {% for message in app.session.flashBag.get('messages') %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
