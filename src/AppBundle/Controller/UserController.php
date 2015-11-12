@@ -96,6 +96,10 @@ class UserController extends Controller
     /**
      * doUpdateAction
      *
+     * You cannot create a new User and pass it to the form because it will not pass the unique entity constraint
+     * because the user is new. So first of all you have to ask your DB for the user. This is the reason because
+     * we need the $id as an argument for the action
+     *
      * @Route(
      *     path="/do-update/{id}",
      *     name="app_user_doUpdate"
@@ -108,16 +112,13 @@ class UserController extends Controller
     {
         $m          = $this->getDoctrine()->getManager();
         $repository = $m->getRepository('AppBundle:User');
-
-        $user = $repository->find($id);
-
-        $form = $this->createForm(new UserType(), $user);
+        $user       = $repository->find($id);
+        $form       = $this->createForm(new UserType(), $user);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $m->flush();
-
             $this->addFlash('messages', 'User updated');
 
             return $this->redirectToRoute('app_user_index');

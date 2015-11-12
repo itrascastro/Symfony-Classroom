@@ -12,9 +12,9 @@ class UserType extends AbstractType
     {
         $builder
             ->add('id', 'hidden')
-            ->add('email', 'email')
-            ->add('password', 'text')
-            ->add('username', 'text')
+            ->add('email', 'email', ['error_bubbling' => true])
+            ->add('password', 'text', ['error_bubbling' => true])
+            ->add('username', 'text', ['error_bubbling' => true])
         ;
     }
 
