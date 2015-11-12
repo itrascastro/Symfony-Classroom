@@ -12,21 +12,23 @@ class UserType extends AbstractType
     {
         $builder
             ->add('id', 'hidden')
-            ->add('email')
-            ->add('password')
-            ->add('username')
-            ->add('createdAt', null, ['disabled' => 'disabled'])
-            ->add('updatedAt', null, ['disabled' => 'disabled'])
+            ->add('email', 'email')
+            ->add('password', 'text')
+            ->add('username', 'text')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setDefaults(
+            [
+                'data_class' => 'AppBundle\Entity\User',
+            ]
+        );
     }
 
     public function getName()
     {
-        return 'app_form_user';
+        return 'app_bundle_user_type';
     }
 }

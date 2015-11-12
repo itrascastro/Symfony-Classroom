@@ -2,18 +2,13 @@
 
 {% block body %}
     <div>
-        {{ form_widget(form) }}
-    </div>
-    <div>
-        <form method="post" action="{{ path('app_user_doUpdate') }}">
-            <input type="hidden" name="id" value="{{ user.id }}">
-            <input type="number" value="{{ user.id }}" name="showId" disabled="disabled"><br>
-            <input type="email" value="{{ user.email }}" name="email"><br>
-            <input type="text" value="{{ user.password }}" name="password"><br>
-            <input type="text" value="{{ user.username }}" name="username"><br>
-            <input type="datetime" value="{{ user.createdAt|date("d/m/Y H:i:s") }}" name="createdAt" disabled="disabled"><br>
-            <input type="datetime" value="{{ user.updatedAt|date("d/m/Y H:i:s") }}" name="updatedAt" disabled="disabled"><br>
-            <input type="submit" value="Update">
+        <form method="post" action="{{ path('app_user_doUpdate', {'id': form.vars.value.id}) }}" novalidate="novalidate">
+            <div>{{ form_errors(form.email) }}</div>
+            <div>{{ form_row(form.email) }}</div>
+            <div>{{ form_row(form.username) }}</div>
+            <div>{{ form_row(form.password) }}</div>
+            {{ form_rest(form) }}
+            <div><input type="submit" value="Update"></div>
         </form>
     </div>
 {% endblock %}

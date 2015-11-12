@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints As Assert;
 
 /**
@@ -11,6 +12,8 @@ use Symfony\Component\Validator\Constraints As Assert;
  * @ORM\Table(name="app_user")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"email"}, message="This email is taken")
+ * @UniqueEntity(fields={"username"}, message="This username is taken")
  */
 class User
 {
@@ -27,6 +30,7 @@ class User
      * @var string
      *
      * @Assert\Email()
+     * @Assert\NotBlank(message="Email cannot be empty")
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
@@ -42,6 +46,7 @@ class User
      *     minMessage="Username too short",
      *     maxMessage="Username too long"
      * )
+     * @Assert\NotBlank(message="Username cannot be empty")
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
@@ -50,6 +55,11 @@ class User
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Password cannot be empty")
+     * @Assert\Regex(
+     *      pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/",
+     *      message="Use 1 upper case letter, 1 lower case letter, and 1 number"
+     * )
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -75,6 +85,14 @@ class User
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = $this->createdAt;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
