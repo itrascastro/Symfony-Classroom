@@ -84,12 +84,9 @@ class UserController extends Controller
 
         $user = $repository->find($id);
 
-        $form = $this->createForm(new UserType(), $user);
-
         return $this->render(':user:update.html.twig',
             [
                 'user'  => $user,
-                'form'  => $form->createView(),
             ]
         );
     }

@@ -2,9 +2,6 @@
 
 {% block body %}
     <div>
-        {{ form_widget(form) }}
-    </div>
-    <div>
         <form method="post" action="{{ path('app_user_doUpdate') }}">
             <input type="hidden" name="id" value="{{ user.id }}">
             <input type="number" value="{{ user.id }}" name="showId" disabled="disabled"><br>

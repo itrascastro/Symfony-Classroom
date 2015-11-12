@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints As Assert;
 
 /**
  * User
@@ -26,8 +25,6 @@ class User
     /**
      * @var string
      *
-     * @Assert\Email()
-     *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
      */
@@ -35,13 +32,6 @@ class User
 
     /**
      * @var string
-     *
-     * @Assert\Length(
-     *     min="3",
-     *     max="8",
-     *     minMessage="Username too short",
-     *     maxMessage="Username too long"
-     * )
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
