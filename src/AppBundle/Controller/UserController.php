@@ -180,7 +180,7 @@ class UserController extends Controller
 
         $this->addFlash('messages', 'Review your form');
 
-        return $this->render(':user:update.html.twig',
+        return $this->render(':user:form.html.twig',
             [
                 'form'  => $form->createView(),
             ]
