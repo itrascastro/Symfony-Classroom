@@ -31,7 +31,6 @@ class User
      *
      * @Assert\Email()
      * @Assert\NotBlank(message="Email cannot be empty")
-     *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
      */
@@ -79,7 +78,7 @@ class User
     private $updatedAt;
 
     /**
-     * User constructor.
+     * User constructor
      */
     public function __construct()
     {

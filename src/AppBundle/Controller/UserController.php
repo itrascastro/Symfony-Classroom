@@ -69,6 +69,58 @@ class UserController extends Controller
     }
 
     /**
+     * @Route(
+     *     path="/insert",
+     *     name="app_user_insert"
+     * )
+     */
+    public function insertAction()
+    {
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
+
+        return $this->render(':user:form.html.twig',
+            [
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doInsert')
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *     path="/do-insert",
+     *     name="app_user_doInsert"
+     * )
+     */
+    public function doInsert(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $m = $this->getDoctrine()->getManager();
+            $m->persist($user);
+            $m->flush();
+
+            $this->addFlash('messages', 'User added');
+
+            return $this->redirectToRoute('app_user_index');
+        }
+
+        $this->addFlash('messages', 'Review your form data');
+
+        return $this->render(':user:form.html.twig',
+            [
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doInsert')
+            ]
+        );
+    }
+
+    /**
      * updateAction
      *
      * @Route(
@@ -86,9 +138,10 @@ class UserController extends Controller
 
         $form = $this->createForm(new UserType(), $user);
 
-        return $this->render(':user:update.html.twig',
+        return $this->render(':user:form.html.twig',
             [
-                'form'  => $form->createView(),
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id])
             ]
         );
     }
@@ -115,6 +168,7 @@ class UserController extends Controller
         $user       = $repository->find($id);
         $form       = $this->createForm(new UserType(), $user);
 
+        // user is updated with incoming data
         $form->handleRequest($request);
 
         if ($form->isValid()) {
