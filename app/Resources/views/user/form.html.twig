@@ -1,9 +1,8 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <!-- http://stackoverflow.com/questions/18848870/how-to-display-all-form-error-at-one-place -->
     <div>
-        <form method="post" action="{{ path('app_user_doUpdate', {'id': form.vars.value.id}) }}" novalidate="novalidate">
+        <form method="post" action="{{ action }}" novalidate="novalidate">
             <div>
                 <ul>
                     {% for error in form.vars.errors %}
@@ -13,9 +12,10 @@
             </div>
             <div>{{ form_label(form.email) }}: {{ form_widget(form.email) }}</div>
             <div>{{ form_label(form.username) }}: {{ form_widget(form.username) }}</div>
-            <div>{{ form_label(form.password) }}: {{ form_widget(form.password) }}</div>
+            <div>{{ form_label(form.plainPassword.first) }}: {{ form_widget(form.plainPassword.first) }}</div>
+            <div>{{ form_label(form.plainPassword.second) }}: {{ form_widget(form.plainPassword.second) }}</div>
             {{ form_rest(form) }}
-            <div><input type="submit" value="Update"></div>
+            <div><input type="submit" value="Ok"></div>
         </form>
     </div>
 {% endblock %}

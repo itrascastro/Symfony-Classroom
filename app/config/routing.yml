@@ -1,9 +1,7 @@
-calculator:
-    resource: "@AppBundle/Controller/CalculatorController.php"
-    type:     annotation
-    prefix:   /calculator
+app.security:
+    resource: "@AppBundle/Controller/SecurityController.php"
+    type: annotation
 
-users:
+app.user:
     resource: "@AppBundle/Controller/UserController.php"
-    type:     annotation
-    prefix:   /user
+    type: annotation

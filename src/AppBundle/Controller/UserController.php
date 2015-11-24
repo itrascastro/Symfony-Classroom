@@ -4,66 +4,152 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
     /**
-     * indexAction
-     *
      * @Route(
      *     path="/",
+     *     name="app_user_menu"
+     * )
+     */
+    public function menuAction()
+    {
+        return $this->render(':user:menu.html.twig');
+    }
+
+    /**
+     * @Route(
+     *     path="/index",
      *     name="app_user_index"
      * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
     {
         $m = $this->getDoctrine()->getManager();
-
-        /*
-        $user1 = new User();
-        $user1->setEmail('user1@email.com');
-        $user1->setPassword('1234');
-        $user1->setUsername('user1');
-        $m->persist($user1);
-
-        $user2 = new User();
-        $user2->setEmail('user2@email.com');
-        $user2->setPassword('1234');
-        $user2->setUsername('user2');
-        $m->persist($user2);
-        */
-
-        /*$user3 = new User();
-        $user3->setEmail('user3@email.com');
-        $user3->setPassword('1234');
-        $user3->setUsername('user3');
-        $m->persist($user3);
-
-        $m->flush();*/
-
         $repository = $m->getRepository('AppBundle:User');
 
-        /**
-         * @var User $user
-         */
-        //$user = $repository->findOneByUsername('user2');
-
-        //$user->setEmail('nuevo@email.com');
-
-        //$m->remove($user);
-
         $users = $repository->findAll();
-
-
 
         return $this->render(':user:index.html.twig',
             [
                 'users' => $users,
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *     path="/register",
+     *     name="app_user_register"
+     * )
+     */
+    public function registerAction()
+    {
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_user_menu');
+        }
+
+        $user = new User();
+
+        return $this->render(':user:form.html.twig',
+            [
+                'form'      => $this->createForm(new UserType(), $user)->createView(),
+                'action'    => $this->generateUrl('app_user_doRegister'),
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *     path="/do-register",
+     *     name="app_user_doRegister"
+     * )
+     * @Method(methods={"POST"})
+     */
+    public function doRegisterAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $m = $this->getDoctrine()->getManager();
+            $m->persist($user);
+            $m->flush();
+            $this->addFlash('messages', 'Your account is now active');
+
+            return $this->redirectToRoute('app_security_login');
+        }
+
+        $this->addFlash('messages', 'Review your form data');
+
+        return $this->render(':user:form.html.twig',
+            [
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doRegister'),
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *     path="/insert",
+     *     name="app_user_insert"
+     * )
+     */
+    public function insertAction()
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Restricted area');
+        }
+
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
+        return $this->render(':user:form.html.twig',
+            [
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doInsert')
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *     path="/do-insert",
+     *     name="app_user_doInsert"
+     * )
+     * @Method(methods={"POST"})
+     */
+    public function doInsert(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $m = $this->getDoctrine()->getManager();
+            $m->persist($user);
+            $m->flush();
+
+            $this->addFlash('messages', 'User added');
+
+            return $this->redirectToRoute('app_user_index');
+        }
+
+        $this->addFlash('messages', 'Review your form data');
+
+        return $this->render(':user:form.html.twig',
+            [
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doInsert')
             ]
         );
     }
@@ -76,19 +162,20 @@ class UserController extends Controller
      *     name="app_user_update"
      * )
      *
+     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function updateAction($id)
     {
         $m = $this->getDoctrine()->getManager();
         $repository = $m->getRepository('AppBundle:User');
-
         $user = $repository->find($id);
-
         $form = $this->createForm(new UserType(), $user);
 
-        return $this->render(':user:update.html.twig',
+        return $this->render(':user:form.html.twig',
             [
-                'form'  => $form->createView(),
+                'form'      => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id])
             ]
         );
     }
@@ -105,6 +192,8 @@ class UserController extends Controller
      *     name="app_user_doUpdate"
      * )
      *
+     * @Method(methods={"POST"})
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -114,22 +203,43 @@ class UserController extends Controller
         $repository = $m->getRepository('AppBundle:User');
         $user       = $repository->find($id);
         $form       = $this->createForm(new UserType(), $user);
-
+        // user is updated with incoming data
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $m->flush();
             $this->addFlash('messages', 'User updated');
-
             return $this->redirectToRoute('app_user_index');
         }
 
         $this->addFlash('messages', 'Review your form');
 
-        return $this->render(':user:update.html.twig',
+        return $this->render(':user:form.html.twig',
             [
                 'form'  => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route(
+     *     path="/remove/{id}",
+     *     name="app_user_remove"
+     * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removeAction($id)
+    {
+        $m = $this->getDoctrine()->getManager();
+        $repository = $m->getRepository('AppBundle:User');
+        $user = $repository->find($id);
+
+        $m->remove($user);
+        $m->flush();
+
+        $this->addFlash('messages', 'User removed');
+
+        return $this->redirectToRoute('app_user_index');
     }
 }

@@ -7,6 +7,9 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <div style="text-align: right">
+            <a href="{{ path('app_user_menu') }}">Index</a>
+        </div>
         <ul>
         {% for message in app.session.flashBag.get('messages') %}
             <li>{{ message }}</li>
