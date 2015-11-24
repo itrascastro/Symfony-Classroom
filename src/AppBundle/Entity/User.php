@@ -412,18 +412,4 @@ class User implements AdvancedUserInterface, \Serializable
             $this->isActive
         ) = unserialize($serialized);
     }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return User
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 }
