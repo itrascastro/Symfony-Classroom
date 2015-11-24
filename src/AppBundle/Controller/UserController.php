@@ -128,7 +128,7 @@ class UserController extends Controller
      * )
      * @Method(methods={"POST"})
      */
-    public function doInsert(Request $request)
+    public function doInsertAction(Request $request)
     {
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
