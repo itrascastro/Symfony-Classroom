@@ -4,5 +4,4 @@ parameters:
 #    parameter_name: value
 
 services:
-  calculator:
-    class: AppBundle\Service\CalculatorService
+

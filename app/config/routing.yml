@@ -1,9 +1,0 @@
-calculator:
-    resource: "@AppBundle/Controller/CalculatorController.php"
-    type:     annotation
-    prefix:   /calculator
-
-users:
-    resource: "@AppBundle/Controller/UserController.php"
-    type:     annotation
-    prefix:   /user
