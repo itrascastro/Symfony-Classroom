@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li>{{ 'app.translator.test1.msg1'|trans({ '%name%': 'larry' }) }}</li>
+        <li>{{ 'app.translator.test1.msg2'|trans({ '%name%': 'kevin' }) }}</li>
+        <li>{{ 'app.translator.test1.msg3'|trans({ '%name%': 'robert' }) }}</li>
+    </ul>
+{% endblock %}

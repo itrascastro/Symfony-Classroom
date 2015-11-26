@@ -16,3 +16,8 @@ _errors:
 
 _main:
     resource: routing.yml
+
+_profiler_custom:
+    resource: "@AppBundle/Controller/ProfilerController.php"
+    type:     annotation
+    prefix:   /_profiler

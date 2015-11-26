@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!--
+ Loco xml export: XLIFF for Symfony
+ Project: Symfony Classroom
+ Release: Working copy
+ Locale: es, Spanish
+ Exported by: ismael trascastro
+ Exported at: Thu, 26 Nov 2015 17:38:29 +0000 
+-->
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="es-ES" tool-id="loco" datatype="plaintext" original="file.ext">
+        <header>
+          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.13 20151109-2" tool-company="Loco" />
+        </header>
+        <body> 
+            <trans-unit id="loco:56572ff014d7250c298b456c">
+                <source>app.translator.test1.msg2</source>
+                <target>Hola %name%</target> 
+            </trans-unit> 
+            <trans-unit id="loco:56572ff014d725f3278b4574">
+                <source>app.translator.test1.msg1</source>
+                <target>Hola %name%</target> 
+            </trans-unit> 
+            <trans-unit id="loco:56572ff014d725fc288b4575">
+                <source>app.translator.test1.msg3</source>
+                <target>Hola %name%</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5657301e14d7250c298b456e">
+                <source>app.translator.index.msg2</source>
+                <target>Hola mensaje 2</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5657301e14d725d6288b456f">
+                <source>app.translator.index.msg1</source>
+                <target>Hola mensaje 1</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5657301f14d725c2278b4574">
+                <source>app.translator.index.msg3</source>
+                <target>Hola mensaje 3</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5657415214d7251d418b4567">
+                <source>app.translator.test2.msg3</source>
+                <target>{0}No hay manzanas|{1}Hay una manzana|]1,Inf[Hay muchas manzanas</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5657415214d72525418b4569">
+                <source>app.translator.test2.msg2</source>
+                <target>{0}No hay manzanas para %name%|{1}Hay una manzana para %name%|]1,Inf[Hay muchas manzanas para %name%</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5657415214d72564418b4567">
+                <source>app.translator.test2.msg1</source>
+                <target>{0}No hay manzanas|{1}Hay una manzana|]1,Inf[Hay muchas manzanas</target> 
+            </trans-unit> 
+        </body>
+    </file>
+</xliff>

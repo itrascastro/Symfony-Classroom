@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li>{{ 'app.translator.test2.msg1'|transchoice(0) }}</li>
+        <li>{{ 'app.translator.test2.msg2'|transchoice(1, {'%name%': 'larry'}) }}</li>
+        <li>{{ 'app.translator.test2.msg3'|transchoice(2) }}</li>
+        <li>{{ 'app.translator.test2.msg4'|transchoice(10) }}</li>
+    </ul>
+{% endblock %}
