@@ -4,6 +4,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * http://jolicode.com/blog/translation-workflow-with-symfony2
+ */
 class ProfilerController extends Controller
 {
     /**
