@@ -218,6 +218,7 @@ class UserController extends Controller
         return $this->render(':user:form.html.twig',
             [
                 'form'  => $form->createView(),
+                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id])
             ]
         );
     }

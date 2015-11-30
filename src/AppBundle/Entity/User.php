@@ -412,4 +412,9 @@ class User implements AdvancedUserInterface, \Serializable
             $this->isActive
         ) = unserialize($serialized);
     }
+
+    public function __toString()
+    {
+        return $this->username;
+    }
 }
