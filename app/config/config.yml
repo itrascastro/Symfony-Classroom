@@ -72,6 +72,8 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration
+# https://www.google.com/settings/security/lesssecureapps (allow apps login)
+# sender email must be gmail owner account
 swiftmailer:
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
