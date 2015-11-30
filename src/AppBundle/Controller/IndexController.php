@@ -20,7 +20,7 @@ class IndexController extends Controller
         var_dump($users);die;*/
         $m = $this->getDoctrine()->getManager();
         $userRepository = $m->getRepository('UserBundle:User');
-        var_dump($userRepository->myFindOneByUsernameOrEmail('i.trascastro@gmail.com'));die;
+        //var_dump($userRepository->myFindOneByUsernameOrEmail('i.trascastro@gmail.com'));
         return $this->render(':index:index.html.twig');
     }
 
@@ -39,6 +39,8 @@ class IndexController extends Controller
             ->setBody('test');
 
         $mailer = $this->get('mailer');
-        $mailer->send($message);die;
+        $mailer->send($message);
+
+        return $this->render(':index:email.html.twig');
     }
 }
