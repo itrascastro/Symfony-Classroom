@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +17,7 @@ class UserController extends Controller
      *     name="app_user_index"
      * )
      *
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
@@ -26,9 +26,11 @@ class UserController extends Controller
 
         /*
         $user1 = new User();
-        $user1->setEmail('user1@email.com');
-        $user1->setPassword('1234');
-        $user1->setUsername('user1');
+        $user1
+            ->setEmail('user1@email.com')
+            ->setPassword('1234')
+            ->setUsername('user1')
+        ;
         $m->persist($user1);
 
         $user2 = new User();
@@ -36,15 +38,15 @@ class UserController extends Controller
         $user2->setPassword('1234');
         $user2->setUsername('user2');
         $m->persist($user2);
-        */
 
-        /*$user3 = new User();
+
+        $user3 = new User();
         $user3->setEmail('user3@email.com');
         $user3->setPassword('1234');
         $user3->setUsername('user3');
-        $m->persist($user3);
+        $m->persist($user3);*/
 
-        $m->flush();*/
+        $m->flush();
 
         $repository = $m->getRepository('AppBundle:User');
 
@@ -121,6 +123,60 @@ class UserController extends Controller
         $m->flush();
 
         $this->addFlash('messages', 'User updated');
+
+        return $this->redirectToRoute('app_user_index');
+    }
+
+    /**
+     * @Route(
+     *     path="/insert",
+     *     name="app_user_insert"
+     * )
+     */
+    public function insertAction()
+    {
+        return $this->render(':user:insert.html.twig');
+    }
+
+    /**
+     * @Route(
+     *     path="/do-insert",
+     *     name="app_user_doInsert"
+     * )
+     */
+    public function doInsertAction(Request $request)
+    {
+        $user = new User();
+
+        $user->setEmail($request->request->get('email'));
+        $user->setUsername($request->request->get('username'));
+        $user->setPassword($request->request->get('password'));
+
+        $m = $this->getDoctrine()->getManager();
+        $m->persist($user);
+        $m->flush();
+
+        $this->addFlash('messages', 'New user created');
+
+        return $this->redirectToRoute('app_user_index');
+    }
+
+    /**
+     * @Route(
+     *     path="/remove/{id}",
+     *     name="app_user_remove"
+     * )
+     */
+    public function removeAction($id)
+    {
+        $m = $this->getDoctrine()->getManager();
+        $repository = $m->getRepository('AppBundle:User');
+
+        $user = $repository->find($id);
+        $m->remove($user);
+        $m->flush();
+
+        $this->addFlash('messages', 'User has been removed');
 
         return $this->redirectToRoute('app_user_index');
     }

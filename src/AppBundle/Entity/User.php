@@ -59,7 +59,7 @@ class User
     private $updatedAt;
 
     /**
-     * User constructor.
+     * User constructor
      */
     public function __construct()
     {
