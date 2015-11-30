@@ -12,24 +12,18 @@
 
 namespace Trascastro\UserBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="`user`")
- * @ORM\Entity(repositoryClass="Trascastro\UserBundle\Entity\UserRepository")
- */
-class User extends BaseUser
+use Doctrine\ORM\EntityRepository;
+
+class UserRepository extends EntityRepository
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    public function __construct()
+    public function myFindOneByUsernameOrEmail($username)
     {
-        parent::__construct();
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.username = :username OR u.email = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
 }

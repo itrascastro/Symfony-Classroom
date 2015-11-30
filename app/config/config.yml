@@ -77,9 +77,16 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+    #disable spool when using gmail
+    #spool:     { type: memory }
 
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Trascastro\UserBundle\Entity\User
+    registration:
+        confirmation:
+            enabled: true
+    from_email:
+        address:        symfonyclassroom@gmail.com
+        sender_name:    "%app_name%"
