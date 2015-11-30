@@ -58,10 +58,14 @@ class UserController extends Controller
 
         $user = new User();
 
+        $form = $this->createForm(new UserType(), $user);
+        $form->remove('roles');
+
         return $this->render(':user:form.html.twig',
             [
-                'form'      => $this->createForm(new UserType(), $user)->createView(),
+                'form'      => $form->createView(),
                 'action'    => $this->generateUrl('app_user_doRegister'),
+                'register'  => true,
             ]
         );
     }
@@ -116,7 +120,8 @@ class UserController extends Controller
         return $this->render(':user:form.html.twig',
             [
                 'form'      => $form->createView(),
-                'action'    => $this->generateUrl('app_user_doInsert')
+                'action'    => $this->generateUrl('app_user_doInsert'),
+                'register'  => false,
             ]
         );
     }
@@ -150,7 +155,8 @@ class UserController extends Controller
         return $this->render(':user:form.html.twig',
             [
                 'form'      => $form->createView(),
-                'action'    => $this->generateUrl('app_user_doInsert')
+                'action'    => $this->generateUrl('app_user_doInsert'),
+                'register'  => false,
             ]
         );
     }
@@ -176,7 +182,8 @@ class UserController extends Controller
         return $this->render(':user:form.html.twig',
             [
                 'form'      => $form->createView(),
-                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id])
+                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id]),
+                'register'  => false,
             ]
         );
     }
@@ -218,7 +225,8 @@ class UserController extends Controller
         return $this->render(':user:form.html.twig',
             [
                 'form'  => $form->createView(),
-                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id])
+                'action'    => $this->generateUrl('app_user_doUpdate', ['id' => $id]),
+                'register'  => false,
             ]
         );
     }

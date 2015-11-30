@@ -12,7 +12,7 @@
             </div>
             <div>{{ form_label(form.email) }}: {{ form_widget(form.email) }}</div>
             <div>{{ form_label(form.username) }}: {{ form_widget(form.username) }}</div>
-            <div>{{ form_label(form.roles) }}: {{ form_widget(form.roles) }}</div>
+            {% if not register %}<div>{{ form_label(form.roles) }}: {{ form_widget(form.roles) }}</div>{% endif %}
             <div>{{ form_label(form.plainPassword.first) }}: {{ form_widget(form.plainPassword.first) }}</div>
             <div>{{ form_label(form.plainPassword.second) }}: {{ form_widget(form.plainPassword.second) }}</div>
             {{ form_rest(form) }}
