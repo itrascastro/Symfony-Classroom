@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: symfony-doctrine
+    database_user: root
+    database_password: bo123456
+    mailer_transport: gmail
+    mailer_host: null
+    mailer_user: symfonyclassroom@gmail.com
+    mailer_password: SymfonyClassroom2015
+    secret: 220fc66ab934851799473900f97218e306adbd11
