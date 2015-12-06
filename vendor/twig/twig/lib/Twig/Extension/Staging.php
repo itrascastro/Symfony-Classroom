@@ -32,6 +32,9 @@ class Twig_Extension_Staging extends Twig_Extension
         $this->functions[$name] = $function;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return $this->functions;
@@ -42,6 +45,9 @@ class Twig_Extension_Staging extends Twig_Extension
         $this->filters[$name] = $filter;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFilters()
     {
         return $this->filters;
@@ -52,6 +58,9 @@ class Twig_Extension_Staging extends Twig_Extension
         $this->visitors[] = $visitor;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNodeVisitors()
     {
         return $this->visitors;
@@ -62,6 +71,9 @@ class Twig_Extension_Staging extends Twig_Extension
         $this->tokenParsers[] = $parser;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getTokenParsers()
     {
         return $this->tokenParsers;
@@ -72,6 +84,9 @@ class Twig_Extension_Staging extends Twig_Extension
         $this->globals[$name] = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getGlobals()
     {
         return $this->globals;
@@ -82,11 +97,17 @@ class Twig_Extension_Staging extends Twig_Extension
         $this->tests[$name] = $test;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getTests()
     {
         return $this->tests;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'staging';

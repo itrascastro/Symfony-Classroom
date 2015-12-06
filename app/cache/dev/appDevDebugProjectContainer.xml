@@ -429,12 +429,18 @@
     <parameter key="assetic.request_listener.class">Symfony\Bundle\AsseticBundle\EventListener\RequestListener</parameter>
     <parameter key="doctrine_cache.apc.class">Doctrine\Common\Cache\ApcCache</parameter>
     <parameter key="doctrine_cache.array.class">Doctrine\Common\Cache\ArrayCache</parameter>
-    <parameter key="doctrine_cache.chain.class">Doctrine\Common\Cache\ChainCache</parameter>
-    <parameter key="doctrine_cache.couchbase.class">Doctrine\Common\Cache\CouchbaseCache</parameter>
-    <parameter key="doctrine_cache.couchbase.connection.class">Couchbase</parameter>
-    <parameter key="doctrine_cache.couchbase.hostnames">localhost:8091</parameter>
     <parameter key="doctrine_cache.file_system.class">Doctrine\Common\Cache\FilesystemCache</parameter>
     <parameter key="doctrine_cache.php_file.class">Doctrine\Common\Cache\PhpFileCache</parameter>
+    <parameter key="doctrine_cache.mongodb.class">Doctrine\Common\Cache\MongoDBCache</parameter>
+    <parameter key="doctrine_cache.mongodb.collection.class">MongoCollection</parameter>
+    <parameter key="doctrine_cache.mongodb.connection.class">MongoClient</parameter>
+    <parameter key="doctrine_cache.mongodb.server">localhost:27017</parameter>
+    <parameter key="doctrine_cache.riak.class">Doctrine\Common\Cache\RiakCache</parameter>
+    <parameter key="doctrine_cache.riak.bucket.class">Riak\Bucket</parameter>
+    <parameter key="doctrine_cache.riak.connection.class">Riak\Connection</parameter>
+    <parameter key="doctrine_cache.riak.bucket_property_list.class">Riak\BucketPropertyList</parameter>
+    <parameter key="doctrine_cache.riak.host">localhost</parameter>
+    <parameter key="doctrine_cache.riak.port">8087</parameter>
     <parameter key="doctrine_cache.memcache.class">Doctrine\Common\Cache\MemcacheCache</parameter>
     <parameter key="doctrine_cache.memcache.connection.class">Memcache</parameter>
     <parameter key="doctrine_cache.memcache.host">localhost</parameter>
@@ -443,23 +449,13 @@
     <parameter key="doctrine_cache.memcached.connection.class">Memcached</parameter>
     <parameter key="doctrine_cache.memcached.host">localhost</parameter>
     <parameter key="doctrine_cache.memcached.port">11211</parameter>
-    <parameter key="doctrine_cache.mongodb.class">Doctrine\Common\Cache\MongoDBCache</parameter>
-    <parameter key="doctrine_cache.mongodb.collection.class">MongoCollection</parameter>
-    <parameter key="doctrine_cache.mongodb.connection.class">MongoClient</parameter>
-    <parameter key="doctrine_cache.mongodb.server">localhost:27017</parameter>
     <parameter key="doctrine_cache.redis.class">Doctrine\Common\Cache\RedisCache</parameter>
     <parameter key="doctrine_cache.redis.connection.class">Redis</parameter>
     <parameter key="doctrine_cache.redis.host">localhost</parameter>
     <parameter key="doctrine_cache.redis.port">6379</parameter>
-    <parameter key="doctrine_cache.riak.class">Doctrine\Common\Cache\RiakCache</parameter>
-    <parameter key="doctrine_cache.riak.bucket.class">Riak\Bucket</parameter>
-    <parameter key="doctrine_cache.riak.connection.class">Riak\Connection</parameter>
-    <parameter key="doctrine_cache.riak.bucket_property_list.class">Riak\BucketPropertyList</parameter>
-    <parameter key="doctrine_cache.riak.host">localhost</parameter>
-    <parameter key="doctrine_cache.riak.port">8087</parameter>
-    <parameter key="doctrine_cache.sqlite3.class">Doctrine\Common\Cache\SQLite3Cache</parameter>
-    <parameter key="doctrine_cache.sqlite3.connection.class">SQLite3</parameter>
-    <parameter key="doctrine_cache.void.class">Doctrine\Common\Cache\VoidCache</parameter>
+    <parameter key="doctrine_cache.couchbase.class">Doctrine\Common\Cache\CouchbaseCache</parameter>
+    <parameter key="doctrine_cache.couchbase.connection.class">Couchbase</parameter>
+    <parameter key="doctrine_cache.couchbase.hostnames">localhost:8091</parameter>
     <parameter key="doctrine_cache.wincache.class">Doctrine\Common\Cache\WinCacheCache</parameter>
     <parameter key="doctrine_cache.xcache.class">Doctrine\Common\Cache\XcacheCache</parameter>
     <parameter key="doctrine_cache.zenddata.class">Doctrine\Common\Cache\ZendDataCache</parameter>
@@ -599,17 +595,17 @@
         <parameter>twig</parameter>
         <parameter>@WebProfiler/Collector/twig.html.twig</parameter>
       </parameter>
-      <parameter key="data_collector.doctrine" type="collection">
-        <parameter>db</parameter>
-        <parameter>@Doctrine/Collector/db.html.twig</parameter>
+      <parameter key="data_collector.security" type="collection">
+        <parameter>security</parameter>
+        <parameter>@Security/Collector/security.html.twig</parameter>
       </parameter>
       <parameter key="swiftmailer.data_collector" type="collection">
         <parameter>swiftmailer</parameter>
         <parameter>@Swiftmailer/Collector/swiftmailer.html.twig</parameter>
       </parameter>
-      <parameter key="data_collector.security" type="collection">
-        <parameter>security</parameter>
-        <parameter>@Security/Collector/security.html.twig</parameter>
+      <parameter key="data_collector.doctrine" type="collection">
+        <parameter>db</parameter>
+        <parameter>@Doctrine/Collector/db.html.twig</parameter>
       </parameter>
       <parameter key="data_collector.dump" type="collection">
         <parameter>dump</parameter>
@@ -1421,30 +1417,30 @@
       </call>
       <call method="add">
         <argument type="service">
-          <service class="Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector" public="false">
-            <tag name="data_collector" template="@Doctrine/Collector/db.html.twig" id="db" priority="250"/>
-            <argument type="service" id="doctrine"/>
-            <call method="addLogger">
-              <argument>default</argument>
-              <argument type="service" id="doctrine.dbal.logger.profiling.default"/>
-            </call>
+          <service class="Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector" public="false">
+            <tag name="data_collector" template="@Security/Collector/security.html.twig" id="security"/>
+            <argument type="service" id="security.token_storage" on-invalid="ignore"/>
+            <argument type="service" id="security.role_hierarchy"/>
           </service>
         </argument>
       </call>
       <call method="add">
         <argument type="service">
           <service class="Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector" public="false">
-            <tag name="data_collector" template="@Swiftmailer/Collector/swiftmailer.html.twig" id="swiftmailer" priority="245"/>
+            <tag name="data_collector" template="@Swiftmailer/Collector/swiftmailer.html.twig" id="swiftmailer"/>
             <argument type="service" id="service_container"/>
           </service>
         </argument>
       </call>
       <call method="add">
         <argument type="service">
-          <service class="Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector" public="false">
-            <tag name="data_collector" template="@Security/Collector/security.html.twig" id="security"/>
-            <argument type="service" id="security.token_storage" on-invalid="ignore"/>
-            <argument type="service" id="security.role_hierarchy"/>
+          <service class="Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector" public="false">
+            <tag name="data_collector" template="@Doctrine/Collector/db.html.twig" id="db"/>
+            <argument type="service" id="doctrine"/>
+            <call method="addLogger">
+              <argument>default</argument>
+              <argument type="service" id="doctrine.dbal.logger.profiling.default"/>
+            </call>
           </service>
         </argument>
       </call>
@@ -1730,7 +1726,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>56635e5f9837e3.84042169</argument>
+            <argument>56645d0a1f0fb9.96451878</argument>
           </service>
         </argument>
       </argument>
@@ -1844,7 +1840,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>56635e5f9837e3.84042169</argument>
+            <argument>56645d0a1f0fb9.96451878</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2279,7 +2275,6 @@
         <argument key="password">bo123456</argument>
         <argument key="charset">UTF8</argument>
         <argument key="driverOptions" type="collection"/>
-        <argument key="defaultTableOptions" type="collection"/>
       </argument>
       <argument type="service">
         <service class="Doctrine\DBAL\Configuration" public="false">
@@ -2547,17 +2542,17 @@
           <argument>twig</argument>
           <argument>@WebProfiler/Collector/twig.html.twig</argument>
         </argument>
-        <argument key="data_collector.doctrine" type="collection">
-          <argument>db</argument>
-          <argument>@Doctrine/Collector/db.html.twig</argument>
+        <argument key="data_collector.security" type="collection">
+          <argument>security</argument>
+          <argument>@Security/Collector/security.html.twig</argument>
         </argument>
         <argument key="swiftmailer.data_collector" type="collection">
           <argument>swiftmailer</argument>
           <argument>@Swiftmailer/Collector/swiftmailer.html.twig</argument>
         </argument>
-        <argument key="data_collector.security" type="collection">
-          <argument>security</argument>
-          <argument>@Security/Collector/security.html.twig</argument>
+        <argument key="data_collector.doctrine" type="collection">
+          <argument>db</argument>
+          <argument>@Doctrine/Collector/db.html.twig</argument>
         </argument>
         <argument key="data_collector.dump" type="collection">
           <argument>dump</argument>

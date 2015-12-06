@@ -22,6 +22,11 @@ class Twig_Node_Expression_Parent extends Twig_Node_Expression
         parent::__construct(array(), array('output' => false, 'name' => $name), $lineno, $tag);
     }
 
+    /**
+     * Compiles the node to PHP.
+     *
+     * @param Twig_Compiler $compiler A Twig_Compiler instance
+     */
     public function compile(Twig_Compiler $compiler)
     {
         if ($this->getAttribute('output')) {

@@ -19,11 +19,8 @@ foreach ($dirs as $dir) {
     }
     echo "$dir\n";
 
-    $json = ltrim(file_get_contents($dir.'/composer.json'));
-    if (null === $package = json_decode($json)) {
-        passthru("composer validate $dir/composer.json");
-        exit(1);
-    }
+    $json = file_get_contents($dir.'/composer.json');
+    $package = json_decode($json);
 
     $package->repositories = array(array(
         'type' => 'composer',

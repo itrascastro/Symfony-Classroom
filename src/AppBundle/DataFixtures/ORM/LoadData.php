@@ -23,31 +23,53 @@ class LoadData implements FixtureInterface
     public function load(ObjectManager $m)
     {
         $a1 = new Article();
-        $a1->setTitle('a1 title');
+        $a1->setTitle('Boston Celtics NBA Champions');
         $m->persist($a1);
 
         $a2 = new Article();
-        $a2->setTitle('a2 title');
+        $a2->setTitle('Marcus Smart named player of the month');
         $m->persist($a2);
 
+        $a3 = new Article();
+        $a3->setTitle('Symfony 3 is here');
+        $m->persist($a3);
+
         $t1 = new Tag();
-        $t1->setName('tag1');
+        $t1->setName('Boston Celtics');
 
         $t2 = new Tag();
-        $t2->setName('tag2');
+        $t2->setName('NBA');
 
         $t3 = new Tag();
-        $t3->setName('tag3');
+        $t3->setName('Sports');
+
+        $t4 = new Tag();
+        $t4->setName('Symfony');
+
+        $t5 = new Tag();
+        $t5->setName('PHP');
+
+        $t6 = new Tag();
+        $t6->setName('Programming');
 
         $a1
             ->addTag($t1)
             ->addTag($t2)
+            ->addTag($t3)
         ;
 
         $a2
+            ->addTag($t1)
             ->addTag($t2)
             ->addTag($t3)
         ;
+
+        $a3
+            ->addTag($t4)
+            ->addTag($t5)
+            ->addTag($t6)
+        ;
+
 
         $m->flush();
     }

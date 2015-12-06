@@ -248,8 +248,13 @@ class ChoiceType extends AbstractType
             return '';
         };
 
-        $placeholder = function (Options $options) {
+        $emptyValue = function (Options $options) {
             return $options['required'] ? null : '';
+        };
+
+        // for BC with the "empty_value" option
+        $placeholder = function (Options $options) {
+            return $options['empty_value'];
         };
 
         $choiceListNormalizer = function (Options $options, $choiceList) use ($choiceListFactory) {
@@ -282,12 +287,6 @@ class ChoiceType extends AbstractType
         };
 
         $placeholderNormalizer = function (Options $options, $placeholder) {
-            if (!is_object($options['empty_value']) || !$options['empty_value'] instanceof \Exception) {
-                @trigger_error('The form option "empty_value" is deprecated since version 2.6 and will be removed in 3.0. Use "placeholder" instead.', E_USER_DEPRECATED);
-
-                $placeholder = $options['empty_value'];
-            }
-
             if ($options['multiple']) {
                 // never use an empty value for this case
                 return;
@@ -329,7 +328,7 @@ class ChoiceType extends AbstractType
             'preferred_choices' => array(),
             'group_by' => null,
             'empty_data' => $emptyData,
-            'empty_value' => new \Exception(), // deprecated
+            'empty_value' => $emptyValue, // deprecated
             'placeholder' => $placeholder,
             'error_bubbling' => false,
             'compound' => $compound,
@@ -341,6 +340,7 @@ class ChoiceType extends AbstractType
         ));
 
         $resolver->setNormalizer('choice_list', $choiceListNormalizer);
+        $resolver->setNormalizer('empty_value', $placeholderNormalizer);
         $resolver->setNormalizer('placeholder', $placeholderNormalizer);
         $resolver->setNormalizer('choice_translation_domain', $choiceTranslationDomainNormalizer);
 

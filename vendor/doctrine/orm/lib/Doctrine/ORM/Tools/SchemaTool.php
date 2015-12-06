@@ -21,7 +21,6 @@ namespace Doctrine\ORM\Tools;
 
 use Doctrine\ORM\ORMException;
 use Doctrine\DBAL\Schema\Comparator;
-use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\Visitor\DropSchemaSqlCollector;
@@ -275,15 +274,6 @@ class SchemaTool
 
             if (isset($class->table['uniqueConstraints'])) {
                 foreach ($class->table['uniqueConstraints'] as $indexName => $indexData) {
-                    $uniqIndex = new Index($indexName, $indexData['columns'], true, false, [], isset($indexData['options']) ? $indexData['options'] : []);
-
-                    foreach ($table->getIndexes() as $tableIndexName => $tableIndex) {
-                        if ($tableIndex->isFullfilledBy($uniqIndex)) {
-                            $table->dropIndex($tableIndexName);
-                            break;
-                        }
-                    }
-
                     $table->addUniqueIndex($indexData['columns'], is_numeric($indexName) ? null : $indexName, isset($indexData['options']) ? $indexData['options'] : array());
                 }
             }

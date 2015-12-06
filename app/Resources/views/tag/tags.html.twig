@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block headTitle %}Tags{% endblock %}
+
+{% block body %}
+    {% for tag in tags %}
+        <h1>{{ tag.name }}</h1>
+
+        <div style="padding: 5px 20px">
+            {% for article in tag.articles %}
+                <div>{{ article }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

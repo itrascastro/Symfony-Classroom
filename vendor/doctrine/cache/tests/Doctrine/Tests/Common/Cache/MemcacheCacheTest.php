@@ -5,41 +5,29 @@ namespace Doctrine\Tests\Common\Cache;
 use Doctrine\Common\Cache\MemcacheCache;
 use Memcache;
 
-/**
- * @requires extension memcache
- */
 class MemcacheCacheTest extends CacheTest
 {
     private $memcache;
 
-    protected function setUp()
+    public function setUp()
     {
+        if ( ! extension_loaded('memcache')) {
+            $this->markTestSkipped('The ' . __CLASS__ .' requires the use of memcache');
+        }
+
         $this->memcache = new Memcache();
 
         if (@$this->memcache->connect('localhost', 11211) === false) {
             unset($this->memcache);
-            $this->markTestSkipped('Cannot connect to Memcache.');
+            $this->markTestSkipped('The ' . __CLASS__ .' cannot connect to memcache');
         }
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
         if ($this->memcache instanceof Memcache) {
             $this->memcache->flush();
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * Memcache does not support " " and null byte as key so we remove them from the tests.
-     */
-    public function provideCacheIds()
-    {
-        $ids = parent::provideCacheIds();
-        unset($ids[21], $ids[22]);
-
-        return $ids;
     }
 
     public function testNoExpire()
@@ -57,14 +45,6 @@ class MemcacheCacheTest extends CacheTest
         $this->assertTrue($cache->contains('key'), 'Memcache provider should support TTL > 30 days');
     }
 
-    public function testGetMemcacheReturnsInstanceOfMemcache()
-    {
-        $this->assertInstanceOf('Memcache', $this->_getCacheDriver()->getMemcache());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected function _getCacheDriver()
     {
         $driver = new MemcacheCache();

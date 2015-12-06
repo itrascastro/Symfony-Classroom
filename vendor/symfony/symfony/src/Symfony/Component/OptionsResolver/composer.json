@@ -19,10 +19,7 @@
         "php": ">=5.3.9"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Component\\OptionsResolver\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Symfony\\Component\\OptionsResolver\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {

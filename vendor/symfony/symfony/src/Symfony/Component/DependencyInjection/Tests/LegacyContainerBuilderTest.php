@@ -19,6 +19,9 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class LegacyContainerBuilderTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Symfony\Component\DependencyInjection\ContainerBuilder::createService
+     */
     public function testCreateServiceFactoryMethod()
     {
         $builder = new ContainerBuilder();
@@ -29,6 +32,9 @@ class LegacyContainerBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('foo' => 'bar', 'bar' => 'foo', $builder->get('bar')), $builder->get('foo1')->arguments, '->createService() passes the arguments to the factory method');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\ContainerBuilder::createService
+     */
     public function testCreateServiceFactoryService()
     {
         $builder = new ContainerBuilder();

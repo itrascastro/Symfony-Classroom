@@ -16,6 +16,9 @@ use Symfony\Component\Config\Loader\LoaderResolver;
 
 class FileLoaderTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Symfony\Component\Config\Loader\FileLoader
+     */
     public function testImportWithFileLocatorDelegation()
     {
         $locatorMock = $this->getMock('Symfony\Component\Config\FileLocatorInterface');

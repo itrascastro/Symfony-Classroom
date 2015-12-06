@@ -10,6 +10,11 @@
  */
 class Twig_Node_Expression_Binary_In extends Twig_Node_Expression_Binary
 {
+    /**
+     * Compiles the node to PHP.
+     *
+     * @param Twig_Compiler $compiler A Twig_Compiler instance
+     */
     public function compile(Twig_Compiler $compiler)
     {
         $compiler

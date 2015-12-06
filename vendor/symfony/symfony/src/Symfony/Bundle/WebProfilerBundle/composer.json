@@ -28,10 +28,7 @@
         "symfony/stopwatch": "~2.2"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Bundle\\WebProfilerBundle\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Symfony\\Bundle\\WebProfilerBundle\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {

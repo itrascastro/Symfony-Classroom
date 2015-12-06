@@ -16,6 +16,9 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
+/**
+ * @covers \Symfony\Bridge\Twig\Command\LintCommand
+ */
 class LintCommandTest extends \PHPUnit_Framework_TestCase
 {
     private $files;

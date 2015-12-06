@@ -19,10 +19,7 @@
         "php": ">=5.3.9"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Component\\ExpressionLanguage\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Symfony\\Component\\ExpressionLanguage\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {

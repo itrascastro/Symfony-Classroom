@@ -22,6 +22,11 @@ class Twig_Node_Expression_BlockReference extends Twig_Node_Expression
         parent::__construct(array('name' => $name), array('as_string' => $asString, 'output' => false), $lineno, $tag);
     }
 
+    /**
+     * Compiles the node to PHP.
+     *
+     * @param Twig_Compiler $compiler A Twig_Compiler instance
+     */
     public function compile(Twig_Compiler $compiler)
     {
         if ($this->getAttribute('as_string')) {

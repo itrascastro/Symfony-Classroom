@@ -161,24 +161,35 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // app_index_articles
-        if ($pathinfo === '/articles') {
-            return array (  '_controller' => 'AppBundle\\Controller\\IndexController::articlesAction',  '_route' => 'app_index_articles',);
+        if (0 === strpos($pathinfo, '/articles')) {
+            // app_article_articles
+            if (rtrim($pathinfo, '/') === '/articles') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'app_article_articles');
+                }
+
+                return array (  '_controller' => 'AppBundle\\Controller\\ArticleController::articlesAction',  '_route' => 'app_article_articles',);
+            }
+
+            // app_article_addArticle
+            if ($pathinfo === '/articles/add-article') {
+                return array (  '_controller' => 'AppBundle\\Controller\\ArticleController::addArticleAction',  '_route' => 'app_article_addArticle',);
+            }
+
+            // app_article_doAddArticle
+            if ($pathinfo === '/articles/do-add-article') {
+                return array (  '_controller' => 'AppBundle\\Controller\\ArticleController::doAddArticleAction',  '_route' => 'app_article_doAddArticle',);
+            }
+
         }
 
-        // app_index_tags
-        if ($pathinfo === '/tags') {
-            return array (  '_controller' => 'AppBundle\\Controller\\IndexController::tagsAction',  '_route' => 'app_index_tags',);
-        }
+        // app_tags_tags
+        if (rtrim($pathinfo, '/') === '/tags') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'app_tags_tags');
+            }
 
-        // app_index_addArticle
-        if ($pathinfo === '/add-article') {
-            return array (  '_controller' => 'AppBundle\\Controller\\IndexController::addArticleAction',  '_route' => 'app_index_addArticle',);
-        }
-
-        // app_index_doAddArticle
-        if ($pathinfo === '/do-add-article') {
-            return array (  '_controller' => 'AppBundle\\Controller\\IndexController::doAddArticleAction',  '_route' => 'app_index_doAddArticle',);
+            return array (  '_controller' => 'AppBundle\\Controller\\TagController::tagsAction',  '_route' => 'app_tags_tags',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

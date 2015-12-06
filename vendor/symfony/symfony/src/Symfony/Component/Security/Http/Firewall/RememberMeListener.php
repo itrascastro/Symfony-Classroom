@@ -21,7 +21,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
-use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy;
 
 /**
  * RememberMeListener implements authentication capabilities via a cookie.
@@ -57,7 +56,7 @@ class RememberMeListener implements ListenerInterface
         $this->logger = $logger;
         $this->dispatcher = $dispatcher;
         $this->catchExceptions = $catchExceptions;
-        $this->sessionStrategy = null === $sessionStrategy ? new SessionAuthenticationStrategy(SessionAuthenticationStrategy::MIGRATE) : $sessionStrategy;
+        $this->sessionStrategy = $sessionStrategy;
     }
 
     /**
@@ -78,7 +77,7 @@ class RememberMeListener implements ListenerInterface
 
         try {
             $token = $this->authenticationManager->authenticate($token);
-            if ($request->hasSession() && $request->getSession()->isStarted()) {
+            if (null !== $this->sessionStrategy && $request->hasSession() && $request->getSession()->isStarted()) {
                 $this->sessionStrategy->onAuthentication($request, $token);
             }
             $this->tokenStorage->setToken($token);

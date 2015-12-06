@@ -10,6 +10,9 @@
  */
 class Twig_Extension_StringLoader extends Twig_Extension
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return array(
@@ -17,6 +20,9 @@ class Twig_Extension_StringLoader extends Twig_Extension
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'string_loader';

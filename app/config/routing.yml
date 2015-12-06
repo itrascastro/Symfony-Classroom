@@ -1,3 +1,9 @@
-app:
-    resource: "@AppBundle/Controller/IndexController.php"
+app.articles:
+    resource: "@AppBundle/Controller/ArticleController.php"
     type: annotation
+    prefix: /articles
+
+app.tags:
+    resource: "@AppBundle/Controller/TagController.php"
+    type: annotation
+    prefix: /tags

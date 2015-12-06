@@ -20,7 +20,8 @@ class IndexController extends Controller
 
         $articleRepo = $m->getRepository('AppBundle:Article');
 
-        $articles = $articleRepo->findAll();
+        // $articles = $articleRepo->findAll() ---> Does lazy loading and it produces extra queries from the templates
+        $articles = $articleRepo->findAllArticles();
 
         return $this->render(':index:articles.html.twig', [
             'articles' => $articles,
@@ -36,7 +37,7 @@ class IndexController extends Controller
 
         $tagRepo = $m->getRepository('AppBundle:Tag');
 
-        $tags = $tagRepo->findAll();
+        $tags = $tagRepo->findAllTags();
 
         return $this->render(':index:tags.html.twig', [
             'tags' => $tags,

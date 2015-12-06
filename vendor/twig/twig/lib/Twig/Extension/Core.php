@@ -114,6 +114,11 @@ class Twig_Extension_Core extends Twig_Extension
         return $this->numberFormat;
     }
 
+    /**
+     * Returns the token parser instance to add to the existing list.
+     *
+     * @return Twig_TokenParser[] An array of Twig_TokenParser instances
+     */
     public function getTokenParsers()
     {
         return array(
@@ -135,6 +140,11 @@ class Twig_Extension_Core extends Twig_Extension
         );
     }
 
+    /**
+     * Returns a list of filters to add to the existing list.
+     *
+     * @return array An array of filters
+     */
     public function getFilters()
     {
         $filters = array(
@@ -192,6 +202,11 @@ class Twig_Extension_Core extends Twig_Extension
         return $filters;
     }
 
+    /**
+     * Returns a list of global functions to add to the existing list.
+     *
+     * @return array An array of global functions
+     */
     public function getFunctions()
     {
         return array(
@@ -207,6 +222,11 @@ class Twig_Extension_Core extends Twig_Extension
         );
     }
 
+    /**
+     * Returns a list of tests to add to the existing list.
+     *
+     * @return array An array of tests
+     */
     public function getTests()
     {
         return array(
@@ -225,6 +245,11 @@ class Twig_Extension_Core extends Twig_Extension
         );
     }
 
+    /**
+     * Returns a list of operators to add to the existing list.
+     *
+     * @return array An array of operators
+     */
     public function getOperators()
     {
         return array(
@@ -315,10 +340,12 @@ class Twig_Extension_Core extends Twig_Extension
             }
         }
 
-        $e = new Twig_Error_Syntax(sprintf('Unknown "%s" test.', $name), $line, $parser->getFilename());
-        $e->addSuggestions($name, array_keys($env->getTests()));
+        $message = sprintf('The test "%s" does not exist', $name);
+        if ($alternatives = $env->computeAlternatives($name, array_keys($env->getTests()))) {
+            $message = sprintf('%s. Did you mean "%s"', $message, implode('", "', $alternatives));
+        }
 
-        throw $e;
+        throw new Twig_Error_Syntax($message, $line, $parser->getFilename());
     }
 
     protected function getTestNodeClass(Twig_Parser $parser, $test)
@@ -330,6 +357,11 @@ class Twig_Extension_Core extends Twig_Extension
         return $test instanceof Twig_Test_Node ? $test->getClass() : 'Twig_Node_Expression_Test';
     }
 
+    /**
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
+     */
     public function getName()
     {
         return 'core';
@@ -817,10 +849,9 @@ function twig_join_filter($value, $glue = '')
  *  {# returns [aa, bb, cc] #}
  * </pre>
  *
- * @param Twig_Environment $env       A Twig_Environment instance
- * @param string           $value     A string
- * @param string           $delimiter The delimiter
- * @param int              $limit     The limit
+ * @param string $value     A string
+ * @param string $delimiter The delimiter
+ * @param int    $limit     The limit
  *
  * @return array The split string as an array
  */
@@ -1477,9 +1508,8 @@ function twig_include(Twig_Environment $env, $context, $template, $variables = a
 /**
  * Returns a template content without rendering it.
  *
- * @param Twig_Environment $env
- * @param string           $name          The template name
- * @param bool             $ignoreMissing Whether to ignore missing templates or not
+ * @param string $name          The template name
+ * @param bool   $ignoreMissing Whether to ignore missing templates or not
  *
  * @return string The template source
  */

@@ -514,8 +514,9 @@ class YamlDriver extends FileDriver
                             if ( ! isset($joinColumnElement['name'])) {
                                 $joinColumnElement['name'] = $joinColumnName;
                             }
-                            $joinTable['joinColumns'][] = $this->joinColumnToArray($joinColumnElement);
                         }
+
+                        $joinTable['joinColumns'][] = $this->joinColumnToArray($joinColumnElement);
                     }
 
                     if (isset($joinTableElement['inverseJoinColumns'])) {
@@ -523,8 +524,9 @@ class YamlDriver extends FileDriver
                             if ( ! isset($joinColumnElement['name'])) {
                                 $joinColumnElement['name'] = $joinColumnName;
                             }
-                            $joinTable['inverseJoinColumns'][] = $this->joinColumnToArray($joinColumnElement);
                         }
+
+                        $joinTable['inverseJoinColumns'][] = $this->joinColumnToArray($joinColumnElement);
                     }
 
                     $mapping['joinTable'] = $joinTable;

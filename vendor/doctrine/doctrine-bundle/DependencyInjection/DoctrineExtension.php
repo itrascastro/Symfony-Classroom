@@ -221,7 +221,7 @@ class DoctrineExtension extends AbstractDoctrineExtension
 
         $options = $this->getConnectionOptions($connection);
 
-        $def = $container
+        $container
             ->setDefinition(sprintf('doctrine.dbal.%s_connection', $name), new DefinitionDecorator('doctrine.dbal.connection'))
             ->setArguments(array(
                 $options,
@@ -230,10 +230,6 @@ class DoctrineExtension extends AbstractDoctrineExtension
                 $connection['mapping_types'],
             ))
         ;
-
-        if (!empty($connection['use_savepoints'])) {
-            $def->addMethodCall('setNestTransactionsWithSavepoints', array($connection['use_savepoints']));
-        }
     }
 
     protected function getConnectionOptions($connection)
@@ -258,7 +254,6 @@ class DoctrineExtension extends AbstractDoctrineExtension
             'keep_slave' => 'keepSlave',
             'shard_choser' => 'shardChoser',
             'server_version' => 'serverVersion',
-            'default_table_options' => 'defaultTableOptions',
         ) as $old => $new) {
             if (isset($options[$old])) {
                 $options[$new] = $options[$old];
@@ -388,13 +383,7 @@ class DoctrineExtension extends AbstractDoctrineExtension
                 ));
             }
 
-            // BC: ResolveTargetEntityListener implements the subscriber interface since
-            // v2.5.0-beta1 (Commit 437f812)
-            if (version_compare(Version::VERSION, '2.5.0-DEV') < 0) {
-                $def->addTag('doctrine.event_listener', array('event' => 'loadClassMetadata'));
-            } else {
-                $def->addTag('doctrine.event_subscriber');
-            }
+            $def->addTag('doctrine.event_listener', array('event' => 'loadClassMetadata'));
         }
     }
 

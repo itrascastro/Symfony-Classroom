@@ -63,14 +63,11 @@ class XmlUtilsTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadFileWithInternalErrorsEnabled()
     {
-        $internalErrors = libxml_use_internal_errors(true);
+        libxml_use_internal_errors(true);
 
         $this->assertSame(array(), libxml_get_errors());
         $this->assertInstanceOf('DOMDocument', XmlUtils::loadFile(__DIR__.'/../Fixtures/Util/invalid_schema.xml'));
         $this->assertSame(array(), libxml_get_errors());
-
-        libxml_clear_errors();
-        libxml_use_internal_errors($internalErrors);
     }
 
     /**
@@ -150,7 +147,7 @@ class XmlUtilsTest extends \PHPUnit_Framework_TestCase
     public function testLoadEmptyXmlFile()
     {
         $file = __DIR__.'/../Fixtures/foo.xml';
-        $this->setExpectedException('InvalidArgumentException', sprintf('File %s does not contain valid XML, it is empty.', $file));
+        $this->setExpectedException('InvalidArgumentException', 'File '.$file.' does not contain valid XML, it is empty.');
         XmlUtils::loadFile($file);
     }
 

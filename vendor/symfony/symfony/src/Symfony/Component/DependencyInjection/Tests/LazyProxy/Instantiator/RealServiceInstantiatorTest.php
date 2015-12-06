@@ -18,6 +18,8 @@ use Symfony\Component\DependencyInjection\LazyProxy\Instantiator\RealServiceInst
  * Tests for {@see \Symfony\Component\DependencyInjection\Instantiator\RealServiceInstantiator}.
  *
  * @author Marco Pivetta <ocramius@gmail.com>
+ *
+ * @covers \Symfony\Component\DependencyInjection\LazyProxy\Instantiator\RealServiceInstantiator
  */
 class RealServiceInstantiatorTest extends \PHPUnit_Framework_TestCase
 {

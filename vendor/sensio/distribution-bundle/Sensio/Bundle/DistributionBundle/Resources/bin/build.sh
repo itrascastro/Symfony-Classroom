@@ -38,7 +38,7 @@ rm -rf /tmp/Symfony
 mkdir /tmp/Symfony
 
 # Create project
-composer create-project --prefer-dist --no-interaction symfony/framework-standard-edition /tmp/Symfony $2
+composer create-project -n symfony/framework-standard-edition /tmp/Symfony $2
 
 if [ 0 -ne $? ]; then
     echo "\033[37;41mVersion $2 does not exist\033[0m"
@@ -69,29 +69,19 @@ else
 fi
 
 # kriswallsmith
-if [ -d $TARGET/kriswallsmith/assetic ]; then
-    cd $TARGET/kriswallsmith/assetic && rm -rf CHANGELOG* phpunit.xml* tests docs
-fi
+cd $TARGET/kriswallsmith/assetic && rm -rf CHANGELOG* phpunit.xml* tests docs
 
 # Monolog
 cd $TARGET/monolog/monolog && rm -rf README.markdown phpunit.xml* tests
 
 # Sensio
-if [ -d $TARGET/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle ]; then
-    cd $TARGET/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
-else
-    cd $TARGET/sensio/distribution-bundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
-fi
+cd $TARGET/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
 if [ -d $TARGET/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle ]; then
     cd $TARGET/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
 else
     cd $TARGET/sensio/framework-extra-bundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
 fi
-if [ -d $TARGET/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle ]; then
-    cd $TARGET/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
-else
-    cd $TARGET/sensio/generator-bundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
-fi
+cd $TARGET/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle && rm -rf phpunit.xml* Tests CHANGELOG* Resources/doc
 
 # Swiftmailer
 cd $TARGET/swiftmailer/swiftmailer && rm -rf CHANGES README* build* docs notes test-suite tests create_pear_package.php package*
@@ -101,7 +91,7 @@ cd $TARGET/symfony/symfony && rm -rf README.md phpunit.xml* tests *.sh vendor
 
 if [ -d $TARGET/symfony/assetic-bundle/Symfony/Bundle/AsseticBundle ]; then
     cd $TARGET/symfony/assetic-bundle/Symfony/Bundle/AsseticBundle && rm -rf Tests Resources/doc
-elif [ -d $TARGET/symfony/assetic-bundle ]; then
+else
     cd $TARGET/symfony/assetic-bundle && rm -rf Tests Resources/doc
 fi
 

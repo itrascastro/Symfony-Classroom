@@ -30,10 +30,6 @@ PHP
 
     public function testCommandLine()
     {
-        if ('phpdbg' === PHP_SAPI) {
-            $this->markTestSkipped('phpdbg SAPI is not supported by this test.');
-        }
-
         $process = new PhpProcess(<<<PHP
 <?php echo 'foobar';
 PHP

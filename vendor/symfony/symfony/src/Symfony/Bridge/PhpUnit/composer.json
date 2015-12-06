@@ -16,17 +16,14 @@
         }
     ],
     "require": {
-        "php": ">=5.3.9"
+        "php": ">=5.3.3"
     },
     "suggest": {
         "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
     },
     "autoload": {
         "files": [ "bootstrap.php" ],
-        "psr-4": { "Symfony\\Bridge\\PhpUnit\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Symfony\\Bridge\\PhpUnit\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {

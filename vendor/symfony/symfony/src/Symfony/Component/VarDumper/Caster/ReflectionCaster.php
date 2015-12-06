@@ -157,9 +157,6 @@ class ReflectionCaster
     {
         $prefix = Caster::PREFIX_VIRTUAL;
 
-        // Added by HHVM
-        unset($a['info']);
-
         self::addMap($a, $c, array(
             'position' => 'getPosition',
             'isVariadic' => 'isVariadic',
@@ -167,11 +164,7 @@ class ReflectionCaster
         ));
 
         try {
-            if (method_exists($c, 'hasType')) {
-                if ($c->hasType()) {
-                    $a[$prefix.'typeHint'] = $c->getType()->__toString();
-                }
-            } elseif ($c->isArray()) {
+            if ($c->isArray()) {
                 $a[$prefix.'typeHint'] = 'array';
             } elseif (method_exists($c, 'isCallable') && $c->isCallable()) {
                 $a[$prefix.'typeHint'] = 'callable';
@@ -179,9 +172,6 @@ class ReflectionCaster
                 $a[$prefix.'typeHint'] = $v->name;
             }
         } catch (\ReflectionException $e) {
-            if (preg_match('/^Class ([^ ]++) does not exist$/', $e->getMessage(), $m)) {
-                $a[$prefix.'typeHint'] = $m[1];
-            }
         }
 
         try {
@@ -190,9 +180,6 @@ class ReflectionCaster
                 $a[$prefix.'default'] = new ConstStub($c->getDefaultValueConstantName(), $v);
             }
         } catch (\ReflectionException $e) {
-            if (isset($a[$prefix.'typeHint']) && $c->allowsNull()) {
-                $a[$prefix.'default'] = null;
-            }
         }
 
         return $a;

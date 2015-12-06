@@ -254,7 +254,6 @@ class MonologExtension extends Extension
                 array(
                     'index' => $handler['index'],
                     'type' => $handler['document_type'],
-                    'ignore_error' => $handler['ignore_error']
                 ),
                 $handler['level'],
                 $handler['bubble'],

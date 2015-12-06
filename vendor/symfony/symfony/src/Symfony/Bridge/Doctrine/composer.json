@@ -41,10 +41,7 @@
         "doctrine/orm": ""
     },
     "autoload": {
-        "psr-4": { "Symfony\\Bridge\\Doctrine\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Symfony\\Bridge\\Doctrine\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {

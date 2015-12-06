@@ -10,5 +10,15 @@ namespace AppBundle\Entity;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllArticles()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addOrderBy('a.title', 'DESC')
+            ->leftJoin('a.tags', 'tags')
+            ->addSelect('tags')
+            ->getQuery()
+        ;
 
+        return $qb->execute();
+    }
 }

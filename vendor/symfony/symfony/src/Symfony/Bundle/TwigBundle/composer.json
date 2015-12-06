@@ -34,10 +34,7 @@
         "symfony/framework-bundle": "~2.7"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Bundle\\TwigBundle\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Symfony\\Bundle\\TwigBundle\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {

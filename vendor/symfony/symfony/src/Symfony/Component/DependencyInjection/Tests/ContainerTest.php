@@ -19,6 +19,9 @@ use Symfony\Component\DependencyInjection\Exception\InactiveScopeException;
 
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::__construct
+     */
     public function testConstructor()
     {
         $sc = new Container();
@@ -72,6 +75,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::compile
+     */
     public function testCompile()
     {
         $sc = new Container(new ParameterBag(array('foo' => 'bar')));
@@ -82,6 +88,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('foo' => 'bar'), $sc->getParameterBag()->all(), '->compile() copies the current parameters to the new parameter bag');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::isFrozen
+     */
     public function testIsFrozen()
     {
         $sc = new Container(new ParameterBag(array('foo' => 'bar')));
@@ -90,12 +99,19 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($sc->isFrozen(), '->isFrozen() returns true if the parameters are frozen');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::getParameterBag
+     */
     public function testGetParameterBag()
     {
         $sc = new Container();
         $this->assertEquals(array(), $sc->getParameterBag()->all(), '->getParameterBag() returns an empty array if no parameter has been defined');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::setParameter
+     * @covers Symfony\Component\DependencyInjection\Container::getParameter
+     */
     public function testGetSetParameter()
     {
         $sc = new Container(new ParameterBag(array('foo' => 'bar')));
@@ -118,6 +134,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::getServiceIds
+     */
     public function testGetServiceIds()
     {
         $sc = new Container();
@@ -130,6 +149,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('scoped', 'scoped_foo', 'scoped_synchronized_foo', 'inactive', 'bar', 'foo_bar', 'foo.baz', 'circular', 'throw_exception', 'throws_exception_on_service_configuration', 'service_container', 'foo'), $sc->getServiceIds(), '->getServiceIds() returns defined service ids by getXXXService() methods, followed by service ids defined by set()');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::set
+     */
     public function testSet()
     {
         $sc = new Container();
@@ -137,6 +159,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($foo, $sc->get('foo'), '->set() sets a service');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::set
+     */
     public function testSetWithNullResetTheService()
     {
         $sc = new Container();
@@ -184,6 +209,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($c->synchronized, '->set() calls synchronize*Service() if it is defined for the service');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::get
+     */
     public function testGet()
     {
         $sc = new ProjectServiceContainer();
@@ -243,12 +271,18 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::get
+     */
     public function testGetReturnsNullOnInactiveScope()
     {
         $sc = new ProjectServiceContainer();
         $this->assertNull($sc->get('inactive', ContainerInterface::NULL_ON_INVALID_REFERENCE));
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::has
+     */
     public function testHas()
     {
         $sc = new ProjectServiceContainer();
@@ -261,6 +295,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($sc->has('foo\\baz'), '->has() returns true if a get*Method() is defined');
     }
 
+    /**
+     * @covers Symfony\Component\DependencyInjection\Container::initialized
+     */
     public function testInitialized()
     {
         $sc = new ProjectServiceContainer();
