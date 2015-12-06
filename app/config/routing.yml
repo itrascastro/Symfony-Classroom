@@ -7,3 +7,6 @@ app.tags:
     resource: "@AppBundle/Controller/TagController.php"
     type: annotation
     prefix: /tags
+
+tuser:
+    resource: "@TUserBundle/Resources/config/routing.yml"

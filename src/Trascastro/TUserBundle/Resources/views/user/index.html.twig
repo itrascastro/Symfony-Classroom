@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <table>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.createdAt|date("d/m/Y H:i:s") }}</td>
+                <td>{{ user.updatedAt|date("d/m/Y H:i:s") }}</td>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                <td><a href="{{ path('tuser_user_update', {'id': user.id}) }}">update</a> </td>
+                <td><a href="{{ path('tuser_user_remove', {'id': user.id}) }}">remove</a> </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    <div style="margin-top: 10px">
+        <a href="{{ path('tuser_user_insert') }}">New user</a>
+    </div>
+{% endblock %}

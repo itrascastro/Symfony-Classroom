@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div>
+        <ul>
+            <li><a href="{{ path('tuser_user_menu') }}">Menu</a></li>
+            <li><a href="{{ path('tuser_user_index') }}">List Users</a></li>
+        </ul>
+        <div>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                Welcome {{ app.user.username }} | <a href="{{ path('tuser_security_logout') }}">Logout</a>
+            {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                <a href="{{ path('tuser_security_login') }}">Sign in</a>
+                <a href="{{ path('tuser_user_register') }}">Sign up</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

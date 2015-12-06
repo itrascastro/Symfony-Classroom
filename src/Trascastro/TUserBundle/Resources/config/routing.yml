@@ -1,0 +1,7 @@
+tuser.security:
+    resource: "@TUserBundle/Controller/SecurityController.php"
+    type: annotation
+
+tuser.user:
+    resource: "@TUserBundle/Controller/UserController.php"
+    type: annotation

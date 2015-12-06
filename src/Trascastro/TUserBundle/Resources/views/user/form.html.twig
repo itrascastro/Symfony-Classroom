@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div>
+        <form method="post" action="{{ action }}" novalidate="novalidate">
+            <div>
+                <ul>
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>{{ form_label(form.email) }}: {{ form_widget(form.email) }}</div>
+            <div>{{ form_label(form.username) }}: {{ form_widget(form.username) }}</div>
+            {% if not register %}<div>{{ form_label(form.roles) }}: {{ form_widget(form.roles) }}</div>{% endif %}
+            <div>{{ form_label(form.plainPassword.first) }}: {{ form_widget(form.plainPassword.first) }}</div>
+            <div>{{ form_label(form.plainPassword.second) }}: {{ form_widget(form.plainPassword.second) }}</div>
+            {{ form_rest(form) }}
+            <div><input type="submit" value="Ok"></div>
+        </form>
+    </div>
+{% endblock %}

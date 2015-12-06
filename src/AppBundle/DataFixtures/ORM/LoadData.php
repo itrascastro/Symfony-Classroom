@@ -17,11 +17,30 @@ use AppBundle\Entity\Article;
 use AppBundle\Entity\Tag;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Trascastro\TUserBundle\Entity\User;
 
 class LoadData implements FixtureInterface
 {
     public function load(ObjectManager $m)
     {
+        $user1 = new User();
+        $user1
+            ->setUsername('ismael')
+            ->setPlainPassword('1234')
+            ->setEmail('ismael@email.com')
+            ->setRoles(['ROLE_USER'])
+        ;
+        $m->persist($user1);
+
+        $user2 = new User();
+        $user2
+            ->setUsername('admin')
+            ->setPlainPassword('1234')
+            ->setEmail('admin@email.com')
+            ->setRoles(['ROLE_ADMIN'])
+        ;
+        $m->persist($user2);
+
         $a1 = new Article();
         $a1->setTitle('Boston Celtics NBA Champions');
         $m->persist($a1);

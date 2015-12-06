@@ -1,8 +1,27 @@
 security:
+    encoders:
+        Trascastro\TUserBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+
     providers:
-        in_memory:
-            memory: ~
+        db_users:
+            entity:
+                class: TUserBundle:User
 
     firewalls:
         main:
+            pattern:   ^/
             anonymous: ~
+            form_login:
+                login_path: tuser_security_login
+                check_path: tuser_security_check
+                csrf_provider: security.csrf.token_manager
+            logout:
+                path: tuser_security_logout
+                target: /
+
+    access_control:
+#        - { path: ^/update, roles: ROLE_ADMIN  }
+#        - { path: ^/remove, roles: ROLE_ADMIN  }
